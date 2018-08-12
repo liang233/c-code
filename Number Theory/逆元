@@ -7,4 +7,15 @@
 
 求解逆元的方法网上也有很多，主要贴个版子
 1.费马小定理
+费马小定理为a^(p-1)≡1(%p),(a,p)=1;
+费马小定理需要mod为质数，其逆元为a^(p-2)，证明过程。。。
+
+long long inv(long long a,long long  mod)
+{
+	return quickpow(a,mod-2,mod);
+}
+
+2.
+
+
 
