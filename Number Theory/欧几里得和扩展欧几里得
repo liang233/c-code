@@ -1,0 +1,23 @@
+做下记录，参考https://www.cnblogs.com/haveyoueverbeen/p/4502005.html
+欧几里得算法也叫辗转相除法，用途是求两个正整数a,b的最大公约数，算法原理：gcd(a,b)=gcd(b,a%b);
+先贴个gcd的版
+int gcd(int a,int b)
+{
+    if(b==0)
+        return a;
+    return gcd(b,a%b);
+}
+int gcd(int a,int b)
+{
+    int temp;
+    while(b!=0)
+    {
+        temp=b;
+        b=a%b;
+        a=temp;
+    }
+    return a;
+}
+
+扩展欧几里得exgcd  
+内容：已知a, b，求解一组x，y，使它们满足贝祖等式： ax+by =gcd(a, b)
