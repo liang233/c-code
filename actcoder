@@ -6,3 +6,11 @@ C：Iroha's Obsession  水题（数据小，暴力过）
 D：Iroha and a Grid     学习一下 （组合数学，逆元） code:https://paste.ubuntu.com/p/wdQmQpggHQ/
 E:Iroha and Haiku     直接看题解(状压dp) 
 F：Iroha Loves Strings  
+
+Beginner Contest 043 (Regular Contest 059)
+A：Children and Candies 水
+B：Unhappy Hacking   水 模拟栈
+C：Be Together    水  取平均数(取模判断）
+D：Unbalanced    较水  询问是否存在不平衡序列，其实长度为3即可以为判断标准，对size为2需要进行特判一下，复杂度O(n）
+E：Children and Candies
+F: Unhappy Hacking
