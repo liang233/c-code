@@ -19,6 +19,35 @@ long long inv(long long a,long long  mod)
 扩展欧几里得需要a和mod之间互质，原因是a*x≡1(mod m)等价于a*x+m*y≡1，而a*x + b*y = c 有解的充要条件： c % gcd(a , b) == 0，
 所以a和mod之间必须互质。
 
+贴个版
+long long inv(long long a,long long b,long long mod)
+{
+    int x,y;
+    exgcd(a,b,x,y);
+    return (x%mod+mod)%mod;
+}
+
+3.递归算法
+证明：
+
+
+贴个版
+
+递归
+long long inv(long long a,long long p) //注意a要小于p，先把a%p一下 
+{
+    return a==1?1:(p-p/a)*inv(p%a,p)%p;
+}
+
+O(n)处理1到n的逆元
+void init()
+{
+    inv[1]=1;
+    for(int i=2;i<=n;i++)
+    {
+        inv[i]=(p-p/i)*1ll*inv[p%i]%p;
+    }
+}
 
 
 
