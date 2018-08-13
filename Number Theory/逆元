@@ -15,7 +15,28 @@ long long inv(long long a,long long  mod)
 	return quickpow(a,mod-2,mod);
 }
 
-2.
+2.扩展欧几里得
+扩展欧几里得需要a和mod之间互质，原因是a*x≡1(mod m)等价于a*x+m*y≡1，而a*x + b*y = c 有解的充要条件： c % gcd(a , b) == 0，
+所以a和mod之间必须互质。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
