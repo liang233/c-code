@@ -1,4 +1,9 @@
-做下记录，参考https://www.cnblogs.com/haveyoueverbeen/p/4502005.html
+做下记录，参考
+https://www.cnblogs.com/haveyoueverbeen/p/4502005.html
+https://blog.csdn.net/enjoy_pascal/article/details/77417556
+
+
+
 欧几里得算法也叫辗转相除法，用途是求两个正整数a,b的最大公约数，算法原理：gcd(a,b)=gcd(b,a%b);
 先贴个gcd的版
 int gcd(int a,int b)
