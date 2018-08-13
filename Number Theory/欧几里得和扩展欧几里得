@@ -20,4 +20,32 @@ int gcd(int a,int b)
 }
 
 扩展欧几里得exgcd  
-内容：已知a, b，求解一组x，y，使它们满足贝祖等式： ax+by =gcd(a, b)
+内容：已知a, b，求解一组或者多组解x，y，使它们满足贝祖等式： ax+by =gcd(a, b)
+博客里的推证过程往往是这样的，利用了一条公式 a%b = a - (a/b)*b操作。
+ax+by=gcd(a,b)
+bx1+(a%b)y1=gcd(b,a%b)
+然后把公式代入，进行待定系数，可以得到
+ x = y1
+ y = x1 – a/b*y1
+ 也就是我们可以通过类似gcd迭代来进行迭代exgcd，直到迭代到x=1和y=0和gcd(gcd,0)终止，即1*gcd+0*0=gcd，然后可以再递归返回过去，获取一组特解(x0,y0）
+ 然后我们可以获得一组通解
+x = x0 + (b/gcd)*t
+y = y0 – (a/gcd)*t
+
+ 贴个版 
+long long exgcd(long long a,long long b,long long  &x,long long &y)
+{
+     if(b==0)
+    {
+        x=1;
+        y=0;
+        return a;
+    }
+    long long gcd=exgcd(b,a%b,x,y);
+    long long x2=x,y2=y;
+    x=y2;
+    y=x2-(a/b)*y2;
+    return gcd;
+}
+
+
