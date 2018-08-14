@@ -2,7 +2,7 @@
 先讨论整数的形式
 快速幂经常和取模操作结合，所以模版经常是这样写的
 
-long long quickpow(long long a, long long b，long long mod) {
+long long quickpow(long long a, long long b,long long mod) {
     if (b < 0) return 0;
     long long ret = 1;
     a %= mod;
