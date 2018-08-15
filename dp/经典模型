@@ -1,0 +1,49 @@
+（dp专题一直很是重点，代码量小，居家必考。。。，刷一下经典模型）参见百度文库中动态规划经典教程
+状态是一维的情况。
+1.1 下降/非降子序列问题
+在一个无序的序列 a1,a2,a3,a4…an 里，找到一个最长的序列满足：ai<=aj<=ak…<=am，且 i<j<k…<m.
+（最长非降子序列）或 ai>aj>ak…>am，且 i>j>k…>m.（最长下降子序列）。
+状态定义:dp[i]  选择以第i个数字结尾的最长序列的长度
+转移方程： dp[i]=max(dp[j]+1,dp[i])(0<=j<i)
+例题：拦截导弹
+题目链接：http://www.rqnoj.cn/problem/217
+题目分为两问,第一问很明显是最长非上升子序列,第二问转变一下思路，你会发现变成最长上升子序列(其实认真分析一下题就会发现：每一个导弹最终的结果
+都是要被打的，如果它后面有一个比它高的导弹，那打它的这个装置无论如何也不能打那个导弹了，经过这么一分析，这个问题便抽象成在已知序列里
+找最长上升子序列的问题。
+code:
+#include<cstdio>
+#include<string>
+#include<iostream>
+#include<algorithm>
+using namespace std;
+int n;
+int a[1005];
+int dp1[1005];
+int dp2[1005];
+int main()
+{
+   cin>>n;
+   for(int i=0;i<n;i++)
+      cin>>a[i];
+   dp1[0]=1;
+   dp2[0]=1;
+   for(int i=1;i<n;i++)
+   {
+   	  dp1[i]=1;
+   	  dp2[i]=1;
+      for(int j=0;j<i;j++)
+      {
+      	  if(a[i]<=a[j])
+      	  	dp1[i]=max(dp1[j]+1,dp1[i]);
+		  if(a[i]>a[j])
+		  	    dp2[i]=max(dp2[j]+1,dp2[i]);
+	  }
+   }
+   int ans1=0,ans2=0;
+   for(int i=0;i<n;i++)
+   { 	
+   	 ans1=max(dp1[i],ans1);
+   	 ans2=max(dp2[i],ans2);
+   }
+   cout<<ans1<<" "<<ans2<<endl;
+}
