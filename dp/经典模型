@@ -4,7 +4,7 @@
 在一个无序的序列 a1,a2,a3,a4…an 里，找到一个最长的序列满足：ai<=aj<=ak…<=am，且 i<j<k…<m.
 （最长非降子序列）或 ai>aj>ak…>am，且 i>j>k…>m.（最长下降子序列）。
 状态定义:dp[i]  选择以第i个数字结尾的最长序列的长度，转移方程： dp[i]=max(dp[j]+1,dp[i])(0<=j<i)
-有O(n^2)和O(nlogn)两种算法。
+有O(n^2)和O(nlogn)两种算法,两种算法复杂度不同之处在于寻找max的时候。
 例题1：拦截导弹
 题目链接：http://www.rqnoj.cn/problem/217
 题目分为两问,第一问很明显是最长非上升子序列,第二问转变一下思路，你会发现变成最长上升子序列(其实认真分析一下题就会发现：每一个导弹最终的结果
@@ -17,8 +17,12 @@ code:https://paste.ubuntu.com/p/7MtBgZzgVT/
 code：https://paste.ubuntu.com/p/NwKSMcTbwF/
 例题3:BUY LOW, BUY LOWER
 题目链接：https://vjudge.net/problem/POJ-1952
-题意：
-code：
+题意： 第一问是最长下降子序列，第二问求长度为最长下降子序列的个数，要求如果两个序列相同，即算一个。 第二问比较麻烦，不太好确定是否是相同序列，
+参考https://blog.csdn.net/zhang360896270/article/details/6701589的做法，定义dp2[i]状态为记录0~i之间的最长下降序列个数，边界条件为
+dp1[i]=1时dp2[i]也为1,其余为0，转移时如果dp1[i]==dp1[j]+1&&a[j]>a[i]，即可以将dp2[j]转移到dp2[i]上，为了避免重复，采取倒着搜，
+当a[i]==a[j]，表明i没必要继续往前计算，前面j已经计算过了，可以直接跳出，如果dp1[i]=1(即也是一个叶子节点），因为前面有j的存在，没必要计算，
+将其dp2[i]=0;
+code：https://paste.ubuntu.com/p/M7tjbCGWV7/
 例题4：Bridging signals
 题目链接：https://vjudge.net/problem/POJ-1631
 题意：
