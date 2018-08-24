@@ -12,5 +12,42 @@
  C -To Infinity 水题 题意：按规则变化，很明显可以发现除了1之外的数，例如2的10的10^15次方过后肯定返回当前数了，所以只需要讨论一下，当string长度为1的
               情况，以及当前k位都为1的情况 2A
  D -AtCoder Express 2 
- 补题，20分钟没想出来怎么做，233
- 题意：一条东西通道，n个城市，m条线路，q个询问，询问有多少线路严格在询问中，数据在10^5左右，也就是说只能接受O(nlogn)复杂度 
+ 补题，20分钟没想出来怎么做，233，想通过线段树做的。。。
+ 题意：一条东西通道，n个城市，m条线路，q个询问，询问有多少线路严格在询问中，数据n在500，m，q在10^5左右 
+ 题解：答案说是用dp做得，但代码更重的是前缀和的思想，因为n比较小，所以这道题适合暴力统计出所有情况，再进行查询。为了进行暴力统计，使用了二维前缀和
+ 的方法，二维前缀和
+ 
+ 先贴个代码
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int M=1e7;
+int n,m,q;
+int t[502][502];
+int main()
+{
+  int x,y;
+  cin>>n>>m>>q;
+  for(int i=0;i<m;i++)
+  {
+      cin>>x>>y;
+      t[x][y]++;
+  }
+  for(int i=1;i<=n;i++)
+    for(int j=1;j<=n;j++)
+    {
+        t[i][j]+=t[i][j-1];
+    }
+  for(int i=1;i<=n;i++)
+    for(int j=1;j<=n;j++)
+    {
+        t[i][j]+=t[i-1][j];
+    }
+  for(int i=0;i<q;i++)
+  {
+      cin>>x>>y;
+      cout<<t[y][y]+t[x-1][x-1]-t[x-1][y]-t[y][x-1]<<endl;
+
+  }
+}
+  
