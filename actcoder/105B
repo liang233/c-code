@@ -2,5 +2,72 @@
 A-AtCoder Crackers 题意：n个数分给m个人，分的最多的人和最少的人之间的差距： 水题，整除为0,不整除为1
 B-Cakes and Donuts 题意：询问一个在0到200之间的整数是否能被4和7表示：水题，4x+7y打表查询，题解另给了一种数学解法，表明在21以上的数都满足条件，
                    20以下的明显有1,2,3,5,6,9,10，13,17不满足，证明过程如下：N-0 N-7 N-14 N-21 4个数肯定有一个为4的倍数，所以肯定能被4和7表示
-C-Base -2 Number 
-D-Candy Distribution 题意：n个盒子，寻找连续若干个盒子的和是m的倍数的方案数。 数据量在10^5左右， 连续的和肯定会想到用前缀和求解
+C-Base -2 Number   题意：将数字表现为(-2)为基的字符串，字符串唯一,数字范围为INT:可以仿效基为正整数的方法，
+参考https://blog.csdn.net/Mr_Treeeee/article/details/81776111的思想，
+找到最小的非负整数x使得当前数减x能被k整除，这个x将作为新的最高位写到结果中，然后当前数减去x再除以k。
+code：
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int n;
+int a[50];
+int k;
+int main()
+{
+   cin>>n;
+   if(n==0)
+   {
+       cout<<n<<endl;
+       return 0;
+   }
+   while(n)
+   {
+      if(n%2)
+      {
+          a[k++]=1;
+          n=(n-1)/(-2);
+      }
+      else
+      {
+          a[k++]=0;
+          n=n/(-2);
+      }
+   }
+   for(int i=k-1;i>=0;i--)
+    cout<<a[i];
+    cout<<endl;
+}
+
+D-Candy Distribution 题意：n个盒子，寻找连续若干个盒子的和是m的倍数的方案数。 数据量在10^5左右， 连续的和肯定会想到用前缀和求解,是m的倍数
+                    要求两个数对m取模后的结果相同。  可以用map记录相同取模后结果的计数为n，则方案数为n*(n-1），为了把长度为1（单个元素）的记录下，前缀和
+                    需要加入一个为0，注意long long 
+code:
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int n;
+int m;
+int a[100005];
+int t;
+map<int,ll> g;
+map<int,ll> ::iterator it;
+
+int main()
+{
+    ll t;
+    cin>>n>>m;
+    for(int i=1;i<=n;i++)
+    {
+        cin>>t;
+        a[i]=(t+a[i-1]+m)%m;
+        g[a[i]]++;
+    }
+    g[0]++;
+    ll ans=0;
+    for(it=g.begin();it!=g.end();it++)
+    {
+       // cout<<v[i]<<endl;
+           ans+=(it->second*(it->second-1))/2;
+    }
+    cout<<ans<<endl;
+}
