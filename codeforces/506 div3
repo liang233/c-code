@@ -96,4 +96,61 @@ int main()
   ans=max(max(ans,y-x1),yy-x);
  cout<<ans<<endl;
 }
-比赛时D题感觉是可以出的，但做到最后10分钟左右，就像高中考试一样，总是无法集中注意力，接下来把题补补吧，毕竟div3题比较简单。
+（比赛时D题感觉是可以出的，但做到最后10分钟左右，就像高中考试一样，总是无法集中注意力，接下来把题补补吧，毕竟div3题比较简单。）
+D-Concatenated Multiples
+题意：n个整数，寻找将两个连接起来后是K的倍数的方案数，n为10^5的方案数
+这个数据大小导致算法肯定要比2次循环快，然后我们肯定要提前计算取模，我们定义b[i][j]为长度为i的数字取模后结果为j的方案数，因为数字长度最多为9，
+所以复杂度为O(n*10)，符合要求的，因为j的范围由K决定，需要用map<int,int> b[10]代替
+然后就TLE成狗了，不断换技巧，什么unordered_map，输入输出挂还是不管用，但理论上复杂度完全是够用的啊，最后在留言板中看到map在查找key的时候，
+如果找不到就会特别慢，所以需要找之前确认一下是否存在，不存在的话，他会再。。。不懂哈，map内部没看过，逃
+在代码中还出现另外的问题,比如下面代码C[]中，该取模可以先取模，如果只使用+-*的话，我也出现过爆long long的情况。。。
+code：
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int M=1e5;
+int a[M*2+5];
+unordered_map <int,ll> b[15];
+int n;
+int k;
+ll c[15];
+int getlen(int x)  //x>0
+{
+    int len=0;
+    while(x)
+    {
+        x/=10;
+        len++;
+    }
+    return len;
+}
+ll res;
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin>>n>>k;
+    c[0]=1;
+    for(int i=1;i<=12;i++)
+        c[i]=(c[i-1]*10)%k;
+    for(int i=1;i<=n;i++)
+    {
+        cin>>a[i];
+        int v=getlen(a[i]);
+        int u=a[i]%k;
+        int tt=(c[v]*a[i]+a[i])%k;
+        if(tt==0)
+            res--;
+        b[v][u]++;
+    }
+    for(int i=1;i<=n;i++)
+    {
+        for(int j=1;j<=10;j++)
+        {
+            int ans=(c[j]*a[i])%k;
+            if(b[j].count((k-ans)%k))
+            res+=b[j][(k-ans)%k];
+        }
+    }
+    cout<<res<<endl;
+}
+E-Tree with Small Distances
