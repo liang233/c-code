@@ -1,1 +1,33 @@
-8.25 补题
+8.25 边看曼城打狼的比赛10分钟水了2题，第三题最终也没做完，细节处理的有问题
+A - Train            水题
+B - Grid Compression 水题，枚举列和行判断是否全是白色的，输出时判断是否输出。
+C-  Candles          题意：一行有k个蜡烛，分别有对应坐标，A起始点在0处，要点亮K根蜡烛，问需要跑多少路程。
+                     自己的做法：答案的路径很明显是连续的，需要枚举在起始点左边的蜡烛个数（包括起始点）以及右边的蜡烛个数，
+                     然后路径的走法除非左右蜡烛数量为0，否则都有从左往右或者从右往左两种情况，做题的时候，感觉主要在0也是蜡烛点代码出现了bug，但代码
+                     比较烦琐
+                     题解给的方案比较简单，直接找N-K+1对应路径(l,r）,所有路径为(L)+(R-L)或者（R）+(R-L),都取绝对值。
+code：
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int n,k;
+int a[100005];
+int main()
+{
+   cin>>n>>k;
+   for(int i=0;i<n;i++)
+   {
+    cin>>a[i];
+   }
+   int ans=(int)1e9+5;
+   for(int i=0;i<n-k+1;i++)
+   {
+       int l=i;
+       int r=i+k-1;
+       ans=min(ans,min(abs(a[l])+abs(a[r]-a[l]),abs(a[r])+abs(a[r]-a[l])));
+   }
+   cout<<ans<<endl;
+}
+D-Median of Medians
+E - Ribbons on Tree
+F - Robots and Exits
