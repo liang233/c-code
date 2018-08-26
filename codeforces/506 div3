@@ -1,1 +1,99 @@
+8.24 补下题
+A. Many Equal Substrings  题目的意思是找出一个最短字符串存在k个s子串，思路主要就是找前后缀最大重复的部分，先枚举子串长度，然后
+对比前后缀是否相等，代码如下
+code1：
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int M=1e7;
+int n,k;
+string s;
 
+int main()
+{
+  cin>>n>>k;
+  cin>>s;
+  if(n==1)
+  {
+      for(int i=0;i<k;i++)
+      cout<<s[0];
+      cout<<endl;
+      return 0;
+  }
+  int len=s.size();
+  int ans=0;
+  for(int i=len-1;i>=1;i--)
+  {
+      string  s1,s2;
+      for(int j=0;j<i;j++)
+        s1+=s[j];
+      for(int j=len-i;j<len;j++)
+        s2+=s[j];
+    if(s1==s2)
+    {
+        ans=i;
+       break;
+    }
+  }
+  cout<<s;
+  for(int i=0;i<k-1;i++)
+  {
+      for(int j=ans;j<len;j++)
+        cout<<s[j];
+  }
+  cout<<endl;
+}
+B：Creating the Contest
+题意：一个上升子序列，寻找一个xi<xi+1<=2*xi这样最长的子序列，直接贪心过去就可以了，没看到等于号，wa了几发。
+C：Maximal Intersection
+题意：n个线段，如果去掉一根，问剩下n-1根的最大交集为多大。 n为1e5。
+首先，要求n-1根，那就可以先求n根的，求n根最大和次大的左端点和最小和次小右端点，因为本质上就去掉一根嘛，所以如果存在一根线段恰好为最大左和最小右，
+那么结果就是次大左和次小右之间的距离，否则就（最大左和次小右）和（次大左和最小右）中大的那个。
+code：
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int M=1e7;
+int n;
+int a[300005],b[300005];
+long long x,x1;
+long long y=4294967296;
+long long yy=y;
+long long ans;
+int main()
+{
+ cin>>n;
+ for(int i=0;i<n;i++)
+ {
+     cin>>a[i]>>b[i];
+      if(a[i]>=x)
+      {
+          x1=x;
+          x=a[i];
+      }
+      else if(a[i]>=x1)
+      {
+          x1=a[i];
+      }
+      if(b[i]<=y)
+      {
+          yy=y;
+          y=b[i];
+      }
+      else if(b[i]<=yy)
+      {
+          yy=b[i];
+      }
+ }
+ for(int i=0;i<n;i++)
+ {
+     if(a[i]==x&&b[i]==y)
+     {
+         cout<<yy-x1<<endl;
+         return 0;
+     }
+ }
+  ans=max(max(ans,y-x1),yy-x);
+ cout<<ans<<endl;
+}
+比赛时D题感觉是可以出的，但做到最后10分钟左右，就像高中考试一样，总是无法集中注意力，接下来把题补补吧，毕竟div3题比较简单。
