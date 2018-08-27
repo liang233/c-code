@@ -29,8 +29,74 @@ int main()
    cout<<ans<<endl;
 }
 D-  Median of Medians  题意:给出n个数字，在随机选取2个数字时的任意情况下求出中位数，然后求中位数列表的中位数。
-初看题，很简单，先排个序，然后发现并不能排序。。看了题解，用的是二分的思想，慢慢看吧
+初看题，很简单，先排个序，然后发现并不能排序。。看了题解，用的是二分的思想，结合树状数组和前缀和
 一个序列的中位数即
-https://www.cnblogs.com/wuwangchuxin0924/p/5921130.html
+code：
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int M=100005;
+int n;
+int a[M];
+int C[M*10];
+int s[M*10];
+int lowbit(int i)
+{
+    return i & -i;//或者是return i-(i&(i-1));表示求数组下标二进制的非0最低位所表示的值
+}
+void update(int i,int val)//单点更新
+{
+    while(i<=2*M){
+        C[i]+=val;
+        i+=lowbit(i);//由叶子节点向上更新树状数组C，从左往右更新
+    }
+}
+ll sum(int i)//求区间[1,i]内所有元素的和
+{
+    ll ret=0;
+    while(i>0){
+        ret+=C[i];//从右往左累加求和
+        i-=lowbit(i);
+    }
+    return ret;
+}
+
+bool check(int x)
+{
+    for(int i=1;i<=2*M;i++) C[i]=0;
+    s[0]=0;
+    for(int i=1;i<=n;i++)
+        s[i]=s[i-1]+(a[i]>=x?1:-1);
+    ll ans=0;
+    for(int i=0;i<=n;i++)
+    {
+        ans+=sum(s[i]+M);
+        update(s[i]+M,1);
+    }
+    return ans>=(ll)n*(n+1)/4;
+}
+
+
+
+int main()
+{
+    int l=0,r=0;
+    ios_base::sync_with_stdio(false);
+    cin>>n;
+    for(int i=1;i<=n;i++)
+    {
+        cin>>a[i];
+        r=max(r,a[i]);
+    }
+    while(l!=r)
+    {
+        int mid=(l+r)/2+1;
+        if(check(mid))
+              l=mid;
+        else
+              r=mid-1;
+    }
+    cout<<l<<endl;
+}
 E - Ribbons on Tree
 F - Robots and Exits
