@@ -31,6 +31,6 @@ int main()
 D-  Median of Medians  题意:给出n个数字，在随机选取2个数字时的任意情况下求出中位数，然后求中位数列表的中位数。
 初看题，很简单，先排个序，然后发现并不能排序。。看了题解，用的是二分的思想，慢慢看吧
 一个序列的中位数即
-
+https://www.cnblogs.com/wuwangchuxin0924/p/5921130.html
 E - Ribbons on Tree
 F - Robots and Exits
