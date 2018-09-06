@@ -1,1 +1,38 @@
-
+P1008 三连击
+code:
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int t[10];
+string c[3];
+int main()
+{
+    for(int x=123;x<333;x++)
+    {
+      memset(t,0,sizeof(t));
+      int a=x*2;
+      int b=x*3;
+      c[0]=to_string(x);
+      c[1]=to_string(a);
+      c[2]=to_string(b);
+      int f=1;
+      for(int i=0;i<3;i++)
+      {
+          for(int j=0;j<3;j++)
+          {
+              t[c[i][j]-'0']++;
+              if(t[c[i][j]-'0']>1||c[i][j]=='0')
+              {
+                  f=0;
+                  break;
+              }
+          }
+          if(f==0)
+          break;
+      }
+      if(f)
+      {
+          printf("%d %d %d\n",x,a,b);
+      }
+    }
+}
