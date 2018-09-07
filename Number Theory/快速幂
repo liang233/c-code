@@ -24,3 +24,63 @@ ret=3*a=3^(2^0+2^3) b=0 a=3^(2^4)
 然后偷懒没有取模操作，取模原理也是很简单的，我们可以通过下面公式 a*b%m=(a%m)*(b%m)%m ，乘法想取模就取模了
 
 矩阵快速幂
+今天来补下矩阵快速幂的知识吧，逃。。
+参考https://blog.csdn.net/flushhip/article/details/80068888，然后呢直接转结论吧，先说个废话，矩阵快速幂就是用来加速矩阵乘方计算得，然而
+矩阵快速幂哪里用得到呢，一种是递推式里出现了矩阵，需要计算，还有一种很常见的形式在图论中，下面也是抄的:
+图用邻接矩阵表示，即A(i,j)=1当且仅当存在一条边i->j。令C=A*A，那么C(i,j)=ΣA(i,k)A(k,j)，
+实际上就等于从点i到点j恰好经过2条边的路径数（枚举k为中转点）。类似地，C*A的第i行第j列就表示从i到j经过3条边的路径数。
+同理，如果要求经过k步的路径数，我们只求出A^k即可。
+也就是图论中求对应两个点长度为n的路径数，矩阵An中的ai,j表示：图中点i到点j经过n条边的路径数。
+
+然后我们愉快的贴个版吧
+code：
+//快速幂的版
+template<typename T>
+T mul(T a, LL n, LL mod)
+{
+    T ret(1);
+    for (; n; n >>= 1) {
+        ret = ret * (n & 1 ? a : T(1)) % mod;
+        a = a * a % mod;
+    }
+    return ret;
+}
+
+//矩阵快速幂的版
+template<typename T, int N = 1>
+struct Matrix {
+    Matrix(int f = 0) : n(sizeof(data[0]) / sizeof(data[0][0])) {
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                data[i][j] = T(0);
+        if (f)
+            for (int i = 0; i < n; data[i][i] = T(1), ++i) {}
+    }
+
+    Matrix operator * (const Matrix& other) const {
+        Matrix<T, N> ret;
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                for (int k = 0; k < n; k++)
+                    ret.data[i][j] = (ret.data[i][j] + data[i][k] * other.data[k][j] % MOD) % MOD;
+        return ret;
+    }
+
+    Matrix operator + (const Matrix& other) const {
+        Matrix<T, N> ret;
+        for (int i = 0; i < n; i++)
+            for (int j = 0; j < n; j++)
+                ret.data[i][j] = (data[i][j] + other.data[i][j]) % MOD;
+        return ret;
+    }
+
+    Matrix& operator % (const LL mod) {
+        return *this;
+    }
+
+    T data[N][N];
+    int n;
+};
+
+往往可以这么定义  Matrix<LL, MAX_N> a, b;
+待补
