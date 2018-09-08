@@ -1,0 +1,51 @@
+图论题还是先需要有图嘛，然后就需要建图了
+参考https://blog.csdn.net/hurmishine/article/details/75041117
+1.邻接矩阵 
+这是最简单的，空间复杂度O(n^2),在常规10^5的数据下，用的不是很多，稀疏图比较浪费空间
+
+2.vector邻接表 
+数据不是很bug的时候或者cf的时候，可以用这个，比较好写
+const int maxn=1e5+10;
+
+struct Edge{
+    int u,v,w;
+    Edge(int u=0,int v=0,int w=0){this->u=u,this->v=v,this->w=w;}
+};
+vector<Edge> E;
+vector<int> G[maxn];
+void init(int l,int r)
+{
+    E.clear();
+    for(int i=l;i<=r;i++) G[i].clear();
+}
+void addedge(int u,int v,int w)
+{
+    E.push_back(Edge(u,v,w));
+    G[u].push_back(E.size()-1);
+}
+
+3.链式前项星
+用数组来模拟指针，效率高，空间复杂度O(V+E)
+贴个版
+const int maxn=1e5+10;
+const int maxm=1e5+10;
+
+struct Edge{
+    int u,v,w;
+    int next;
+};
+Edge E[maxm];
+int head[maxn],ne;
+void init()
+{
+    ne=0;
+    memset(head,-1,sizeof(head));
+}
+void addedge(int u,int v,int w)
+{
+    E[ne].u=u, E[ne].v=v, E[ne].w=w;
+    E[ne].next=head[u];
+    head[u]=ne++;
+}
+
+for(int i=head[ne]; i!=-1; i=edge[i].next)
