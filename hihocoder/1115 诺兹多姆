@@ -1,0 +1,107 @@
+这是一道深搜题，和炉石有关，就做了一下。虽然数据比较小，但细节还是比较多。
+诺兹多姆有圣盾，需要枚举一个来破圣盾，然后进行dfs(pos,res,hurt)
+下面两种情况需要单独列出来考虑
+1.有圣盾，有风怒
+2.有风怒，hp>8
+注意输入，这种输入还是用c比较舒服
+代码:
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include<cstdio>
+using namespace std;
+string a,b,c,d;
+struct ss
+{
+	int att,hp;
+	int d,w;
+}v[10],u[10];
+int att1=25;
+int ans=-1;
+int n;
+void dfs(int pos,int resnet,int hurt)
+{
+	if(pos==n)
+	{
+	    if(resnet>=8)
+		ans=max(hurt,ans);
+		return;
+	}
+	if(v[pos].w==-1||v[pos].d==-1)
+	   dfs(pos+1,resnet,hurt);
+	else if(v[pos].w>0&&v[pos].d>0)
+	{
+
+		dfs(pos+1,resnet+v[pos].att*2,hurt);
+		dfs(pos+1,resnet,hurt+v[pos].att*2);
+		dfs(pos+1,resnet+v[pos].att,hurt+v[pos].att);
+	}
+	else if(v[pos].w>0)
+	{
+		if(v[pos].hp>8)
+		{
+		    dfs(pos+1,resnet+v[pos].att*2,hurt);
+			dfs(pos+1,resnet+v[pos].att,hurt+v[pos].att);
+			dfs(pos+1,resnet,hurt+v[pos].att*2);
+		}
+		else
+		{
+			dfs(pos+1,resnet+v[pos].att,hurt);
+			dfs(pos+1,resnet,hurt+v[pos].att*2);
+		}
+	}
+	else
+	{
+			dfs(pos+1,resnet+v[pos].att,hurt);
+			dfs(pos+1,resnet,hurt+v[pos].att);
+	}
+}
+
+
+int main()
+{
+  while(scanf("%d",&n)==1)
+  {
+  	ans=0;
+  	for(int i=0;i<n;i++)
+  	{
+  		scanf("%d%d",&v[i].att,&v[i].hp);
+  		v[i].w=0;
+  		v[i].d=0;
+  		char c;
+  		while(scanf("%c",&c)!=EOF)
+  		{
+  			if(c=='\n')
+  			break;
+  			if(c=='W')
+  			v[i].w=1;
+  			if(c=='D')
+  			v[i].d=1;
+	    }
+	    u[i]=v[i];
+	  }
+
+	  for(int i=0;i<n;i++)
+	  {
+	      if(v[i].w==1&&v[i].d==1)
+	      {
+	          v[i].w=0;
+	          v[i].d=0;
+	      }
+	      else if(v[i].w==1&&v[i].hp>8)
+	      {
+	          v[i].w=0;
+	          v[i].hp-=8;
+	      }
+	      else
+	      {
+	          v[i].w=-1;
+	          v[i].d=-1;
+	      }
+	      dfs(0,0,0);
+	      v[i]=u[i];
+	  }
+	  printf("%d\n",ans);
+  }
+
+}
