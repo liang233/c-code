@@ -9,3 +9,54 @@ code:ll quick_mod(ll a,ll b,ll p)
     }
     return ans;
 }
+2.64位整数乘法
+code：
+ll big_mul(ll a,ll b,ll p)
+{
+    ll ans=0;
+    for(;b;b>>=1)
+    {
+        if(b&1) ans=(ans+a)%p;
+        a=a*2%p;
+    }
+    return ans;
+}
+ll o_mul(ll a,ll b,ll p)
+{
+    a%=p;
+    b%=p;
+    ll c=(long double)a*b/p;
+    ll  ans=a*b-c*p;
+    if(ans<0)
+        ans+=p;
+    if(ans>p)
+        ans-=p;
+    return ans;
+}
+两种思路，一种类似快速幂的方式，将b进行二进制分解，第二种用a*b%p=a*b-[a*b/p]*p公式来计算。
+3.最短Hamilton路径
+Hamilton路径指从 0 到 n-1 不重不漏地经过每个点恰好一次
+这道题利用的二进制状态压缩，定义状态为dp[p][i]表示点经过对应二进制状态为p，目前点处于点i的最短路径。
+转移方程为dp[p][i]=min(dp[p^(1<<i)][j]+a[i][j])
+边界条件为dp[1][0]=0;
+memset(dp,0x3f,sizeof(dp));
+dp[1][0]=0;
+for(int p=1;p<(1<<n);p++)
+    for(int i=0;i<n;i++) if((p>>i)&&1)
+       for(int j=0;j<n;j++) if((p>>j)&&1)
+       {
+          dp[p][i]=min(dp[p][i],dp[p^(1<<i)][j]+a[i][j]);
+       }
+ cout<<dp[(1<<n)-1][n-1]<<endl;
+ 4.Islands and Bridges  poj2288 
+ 这道题是扩展题目，与上面那题比较类似，定义状态为dp[p][i][j]为点经过对应二进制状态为p，目前点处于点i，前一个点为j的最短路径。
+ 并且要统计最大路径的数量，定义ways[p][i][j]为点经过对应二进制状态为p，目前点处于点i，前一个点为j的最大路径的数量。
+ 路径的来源有三部分，第一部分边的长度，这个如果存在，是固定的，每个边都会走一遍，第二部分和第三部分需要统计
+ 转移方程：dp[p][i][j]=min(dp[p^(1<<i)][j][k]+a[i]*a[j]+(d[i][k]?a[i]*a[j]*a[k]:0))
+          ways[p][i][j]+=(=)dp[p^(1<<i)][j][k];
+ 初始化：dp[p][i][j]定义为-1，然后分别进行枚举两个相邻的点，作为开始端,初始化dp和ways数组
+ trick点:n==1时处理
+ 隔了几个小时，又写了一遍，写了好几次才ac..
+ code: https://pastebin.com/FFNELjmS
+ 
+
