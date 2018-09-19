@@ -83,149 +83,18 @@ for(int p=1;p<(1<<n);p++)
  code：https://pastebin.com/uQe3nnz9，注意mle
  第二种方法可以用线段树加扫描线，待补。
  8.递归实现指数型枚举  
- code:
- #include <iostream>
- #include <string>
- #include <algorithm>
- #include<cstdio>
- #include<bitset>
- #include<cstring>
- #include<map>
- using namespace std;
- typedef long long ll;
- const int man=10005;
- int n;
- int b[24];
- int cnt=0;
- void sol(int x)
- {
-    if(x==n+1)
-    {
-        if(cnt)
-        {
-            cout<<b[0];
-        }
-        else
-        {
-            cout<<" "<<endl;
-            return ;
-        }
-        for(int i=1;i<cnt;i++)
-            cout<<" "<<b[i];
-        cout<<endl;
-        return;
-    }
-    b[cnt++]=x;
-    sol(x+1);
-    cnt--;
-    sol(x+1);
- }
- int main()
- {
-  cin>>n;
-  sol(1);
- }
+ code: https://pastebin.com/P1s4m9bq
  9.递归／非递归实现组合型枚举
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include<cstdio>
-#include<bitset>
-#include<cstring>
-#include<map>
-using namespace std;
-typedef long long ll;
-const int man=10005;
-int n,m;
-int b[24];
-int cnt=0;
-void sol(int x)
-{
-    //cout<<x<<" "<<cnt<<endl;
-    if(cnt>m || cnt+(n+1-x)<m)
-        return;
-    if(x==n+1)
-    {
-        if(cnt)
-        {
-            cout<<b[0];
-        }
-        else
-        {
-            cout<<" "<<endl;
-            return ;
-        }
-        for(int i=1;i<cnt;i++)
-            cout<<" "<<b[i];
-        cout<<endl;
-        return;
-    }
-
-    b[cnt++]=x;
-    sol(x+1);
-    cnt--;
-    sol(x+1);
-}
-
-
-int main()
-{
-  cin>>n>>m;
-  sol(1);
-}
+ 将8的代码进行剪枝，code：https://pastebin.com/WWpcFQxz
 10.递归实现排列型枚举
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include<cstdio>
-#include<bitset>
-#include<cstring>
-#include<map>
-using namespace std;
-typedef long long ll;
-const int man=10005;
-int n,m;
-int b[24];
-int a[24];
-int cnt=0;
-void sol(int x)
-{
-    if(cnt>m || cnt+(n+1-x)<m)
-        return;
-    if(x==n+1)
-    {
-        if(cnt)
-        {
-            cout<<b[0];
-        }
-        else
-        {
-            cout<<" "<<endl;
-            return ;
-        }
-        for(int i=1;i<cnt;i++)
-            cout<<" "<<b[i];
-        cout<<endl;
-        return;
-    }
-
-    b[cnt++]=x;
-    sol(x+1);
-    cnt--;
-    sol(x+1);
-}
-
-
-int main()
-{
-  cin>>n;
-  for(int i=0;i<n;i++)
-    a[i]=i+1;
-  do
-  {
-      cout<<a[0];
-      for(int i=1;i<n;i++)
-        cout<<" "<<a[i];
-      cout<<endl;
-  }while((next_permutation(a,a+n)));
-}
+ code1：https://pastebin.com/EZJZBJS5
+ code2：
+10.Tallest Cow  POJ 3263 
+这道题体现了用点操作辅助前缀和代替区间变化的思想，将O(n）降维成O（1）
+举例 1 2 3 4 5 6 7
+ c      1     -1
+ p      1  1 1 0
+ c[3]++,c[6]--;
+ 前缀和P的区间变化为p[3]到p[6-1]都加1了。
+code:https://pastebin.com/SN1UUfPB
+11.
