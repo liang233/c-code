@@ -1,0 +1,15 @@
+1.map 
+for （auto & v ：q）
+  v.first v.second  
+  string
+for (char c: q)
+
+2.emplace 代替insert （map，int）
+emplace_back 代替push_back  （vector）
+可以减少解析函数等消耗
+3.pair
+pair就像一个二元结构体一样
+pair按第一位排序，再按第二位排序
+4.vector 排序
+正排 sort（v.begin(）,v.end())
+倒排 sort(v.rbegin(), v.rend());
