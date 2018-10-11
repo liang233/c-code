@@ -8,7 +8,9 @@ C：寻找(a,b,c)的数量，满足a+b，a+c，b+c分别是k的倍数
 当k为偶数时，a，b,c必须是k/2的倍数，但a,b,c要么全是k/2的奇数倍，要么全是偶数倍。。。
 code：https://paste.ubuntu.com/p/zqrSYv23Yf/
 D:构造一个N个点，M条边的有向图，每条边严格从编号小的指向编号大的。允许重边。要求满足从1号点到N号点恰好有L种不同的路径。其路径总长度分别为0,1,2,……L−1
-solution:
+参考：https://blog.csdn.net/Mr_Treeeee/article/details/82319811
+solution:这道题用到二进制拆分，二进制拆分也就是说2^0,2^1,2^2..,2^(n-1)能表示1到2^n-1其中的任何数，然后我们先分别对<L的最大的2^n-1
+进行拆分，可以连i到i+1，一条0边，一条(1<<i-1)的边，可以恰好表示。
 code:https://paste.ubuntu.com/p/knphF5rTKn/
 E:
 
