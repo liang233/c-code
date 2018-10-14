@@ -1,0 +1,11 @@
+B：比赛时写了O(n2）算法，这里写下贪心的做法吧
+code：http://codeforces.com/contest/1066/submission/44201526
+贪心：在左边能覆盖的时候，优先选右边的。
+
+C：左边插的书左边统计，右边的右边统计，统计相差几本书，然后比较一下从左边取还是右边取。。
+code：http://codeforces.com/contest/1066/submission/44209910
+D：
+
+E：
+
+F：
