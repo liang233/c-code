@@ -1,0 +1,30 @@
+优先队列还是用的比较广泛的，可以维护一个最大堆，最小堆等等，一般不会卡stl。
+头文件
+#include<queue>
+using namespace std;
+
+priority_queue<结构类型> 队列名;
+
+常用函数 empty,size,push,pop,top,back ....
+
+然后常用的最大优先队列  priority_queue <int> q;
+最小优先队列       priority_queue<int,vector<int>,less<int> >q;
+
+二维或者多维的情况的话，需要结构体重载运算符，比如重载 <
+举个例子吧 （p,q） p越大，（p相同，q越小） 越优先取出
+struct node
+{
+   int p,q;
+   node(int p,int q):p(p),q(q){}
+   bool operator< (const node & m )const
+    {
+        if(p<m.p)
+        return 1;  
+        else if(p==m.p&&q>m.q)  
+        {
+           return 1;
+        }
+        return 0;
+    }
+};
+
